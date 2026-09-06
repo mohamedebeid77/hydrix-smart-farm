@@ -263,9 +263,16 @@ body {
 }
 .chip:focus-visible { outline: 2px solid var(--sprout-dark); outline-offset: 2px; }
 .chip-wide { cursor: default; justify-content: center; box-shadow: none; font-weight: 500; }
-.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
-.dot-red { background: var(--danger); }
-.dot-green { background: var(--sprout); animation: pulse 1.4s ease infinite; }
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-inline-end: 6px;
+  flex-shrink: 0;
+}
+.dot-green { background: #22c55e; }
+.dot-red   { background: #ef4444; }
 @keyframes pulse { 50% { opacity: 0.45; } }
 
 .pill {
