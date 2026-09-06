@@ -695,11 +695,19 @@ function render() {
    }
 
   // الري المؤقت
-  if (!state.timedEndsAt) {
-    $("timedRun").classList.add("hidden");
-    $("btnTimedStart").classList.remove("hidden");
-    $("btnTimedStop").classList.add("hidden");
+  // الري المؤقت
+  const timedRun = $("timedRun");
+  const btnTimedStart = $("btnTimedStart");
+  const btnTimedStop = $("btnTimedStop");
+
+  if (timedRun && btnTimedStart && btnTimedStop) {
+     if (!state.timedEndsAt) {
+        timedRun.classList.add("hidden");
+        btnTimedStart.classList.remove("hidden");
+        btnTimedStop.classList.add("hidden");
+     }
   }
+
 
   // الري الذكي
   const chip = $("smartChip");
