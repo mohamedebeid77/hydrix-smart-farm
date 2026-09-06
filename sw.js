@@ -1,6 +1,7 @@
 /* Hydrix — service worker: تخزين مؤقت للعمل بدون إنترنت
    ملاحظة: عند أي تعديل على ملفات التطبيق ارفع رقم الإصدار (v2 → v3 ...) */
-const CACHE = "hydrix-v4";
+// ارفع رقم النسخة مع كل إصدار حتى لا تختلط ملفات HTML وJavaScript القديمة.
+const CACHE = "hydrix-v5";
 const ASSETS = [
   "./",
   "./index.html",
