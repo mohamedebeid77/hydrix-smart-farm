@@ -27,8 +27,10 @@ const HydrixBLE = (() => {
     if (device && device.gatt && device.gatt.connected) return;
 
     device = await navigator.bluetooth.requestDevice({
-      filters: [{ services: [SERVICE_UUID] }],
-      optionalServices: [SERVICE_UUID],
+      acceptAllDevices: true,
+      optionalServices: [
+        "0000ffe0-0000-1000-8000-00805f9b34fb"
+      ]
     });
 
     device.addEventListener("gattserverdisconnected", () => {
