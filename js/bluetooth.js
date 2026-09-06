@@ -27,7 +27,11 @@ const HydrixBLE = (() => {
     if (device && device.gatt && device.gatt.connected) return;
 
     device = await navigator.bluetooth.requestDevice({
-      acceptAllDevices: true,
+      filters: [
+        {
+          namePrefix: "Hydrix"
+        }
+      ],
       optionalServices: [
         "0000ffe0-0000-1000-8000-00805f9b34fb"
       ]
