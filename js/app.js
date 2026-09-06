@@ -11,6 +11,24 @@
 const $ = (id) => document.getElementById(id);
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
+// بعض المتصفحات قد تعرض نسخة HTML مؤقتة أثناء تحديث التطبيق؛ لا تسمح
+// لعُنصر مفقود بأن يوقف التطبيق بالكامل بخطأ "classList of null".
+function toggleClass(id, className, force) {
+  const el = $(id);
+  if (el) el.classList.toggle(className, force);
+  return el;
+}
+function addClass(id, className) {
+  const el = $(id);
+  if (el) el.classList.add(className);
+  return el;
+}
+function removeClass(id, className) {
+  const el = $(id);
+  if (el) el.classList.remove(className);
+  return el;
+}
+
 /* ---------------- الحالة العامة ---------------- */
 const state = {
   connected: false,
@@ -48,6 +66,10 @@ function persist() {
 let toastTimer = null;
 function toast(msg, ms = 2600) {
   const el = $("toast");
+  if (!el) {
+    console.warn("Hydrix: toast element is missing");
+    return;
+  }
   el.textContent = msg;
   el.classList.add("show");
   clearTimeout(toastTimer);
@@ -61,7 +83,7 @@ const NAV_SCREENS = new Set(["dashboard", "history", "plant", "about"]);
 function navigate() {
   let name = location.hash.replace("#", "") || "welcome";
   if (!SCREENS.includes(name)) name = "welcome";
-  SCREENS.forEach((s) => $("screen-" + s).classList.toggle("active", s === name));
+  SCREENS.forEach((s) => toggleClass("screen-" + s, "active", s === name));
   $("bottomnav").hidden = !NAV_SCREENS.has(name);
   document.querySelectorAll(".nav-item").forEach((a) =>
     a.classList.toggle("active", a.dataset.screen === name)
@@ -160,18 +182,18 @@ $("btnTimedStart").addEventListener("click", () => {
   sendBLE("T" + state.timedMin);
   // الأمر T10 بيشغل المضخة على الجهاز — منبعتش ON عشان منلغيش المؤقت هناك
   if (!state.pumpOn) setPump(true, { quiet: true, source: "timed", ble: false });
-  $("timedRun").classList.remove("hidden");
-  $("btnTimedStart").classList.add("hidden");
-  $("btnTimedStop").classList.remove("hidden");
+  removeClass("timedRun", "hidden");
+  addClass("btnTimedStart", "hidden");
+  removeClass("btnTimedStop", "hidden");
   toast(`بدأ الري المؤقت لمدة ${state.timedMin} دقائق`);
 });
 
 function endTimed(msg) {
   state.timedEndsAt = null;
   if (state.pumpOn) setPump(false, { quiet: true });
-  $("timedRun").classList.add("hidden");
-  $("btnTimedStart").classList.remove("hidden");
-  $("btnTimedStop").classList.add("hidden");
+  addClass("timedRun", "hidden");
+  removeClass("btnTimedStart", "hidden");
+  addClass("btnTimedStop", "hidden");
   if (msg) toast(msg);
 }
 $("btnTimedStop").addEventListener("click", () => endTimed("تم إيقاف الري المؤقت"));
@@ -288,7 +310,7 @@ async function loadWeatherOnce() {
     const probs = (w.hourly?.precipitation_probability || []).slice(0, 12).filter((p) => p !== null);
     state.rainForecast = probs.length ? Math.max(...probs) : 0;
     $("weatherSrc").textContent = "بيانات الأرصاد الفعلية";
-    $("weatherSrc").classList.add("on");
+    addClass("weatherSrc", "on");
   } catch {
     /* نبقي القيم التجريبية */
   }
@@ -309,18 +331,18 @@ $("plantFile").addEventListener("change", (e) => {
 function handlePlantImage(dataUrl) {
   const img = new Image();
   img.onload = () => {
-    $("plantEmpty").classList.add("hidden");
-    $("plantResult").classList.add("hidden");
-    $("aiResult").classList.add("hidden");
-    $("aiError").classList.add("hidden");
-    $("aiCard").classList.remove("hidden");
-    $("plantPreview").classList.remove("hidden");
+    addClass("plantEmpty", "hidden");
+    addClass("plantResult", "hidden");
+    addClass("aiResult", "hidden");
+    addClass("aiError", "hidden");
+    removeClass("aiCard", "hidden");
+    removeClass("plantPreview", "hidden");
     $("plantImg").src = img.src;
-    $("analyzing").classList.remove("hidden");
+    removeClass("analyzing", "hidden");
     state.lastPlantImage = dataUrl;
     setTimeout(() => {
       const r = analyzeImage(img);
-      $("analyzing").classList.add("hidden");
+      addClass("analyzing", "hidden");
       showPlantResult(r);
     }, 1400);
   };
@@ -359,7 +381,7 @@ function analyzeImage(img) {
 }
 
 function showPlantResult(r) {
-  $("plantResult").classList.remove("hidden");
+  removeClass("plantResult", "hidden");
   $("ratioGreen").style.width = r.green + "%";
   $("ratioYellow").style.width = r.yellow + "%";
   $("ratioBrown").style.width = r.brown + "%";
@@ -393,14 +415,14 @@ let camFacing = "environment";
 
 function showCamError(msg) {
   stopCamera();
-  $("camVideo").classList.add("hidden");
+  addClass("camVideo", "hidden");
   $("camErrorText").textContent = msg;
-  $("camError").classList.remove("hidden");
+  removeClass("camError", "hidden");
 }
 
 async function startCamera() {
-  $("camError").classList.add("hidden");
-  $("camVideo").classList.remove("hidden");
+  addClass("camError", "hidden");
+  removeClass("camVideo", "hidden");
   const video = $("camVideo");
   if (!navigator.mediaDevices?.getUserMedia) {
     showCamError("الكاميرا غير متاحة هنا — افتح التطبيق على HTTPS من Chrome (كمبيوتر أو أندرويد)");
@@ -481,7 +503,7 @@ $("btnAiAnalyze").addEventListener("click", async () => {
   if (!state.lastPlantImage) { toast("اختر أو صوّر صورة للنبات الأول"); return; }
   let key = localStorage.getItem("hydrix_ai_key");
   if (!key) {
-    $("aiKeyRow").classList.remove("hidden");
+    removeClass("aiKeyRow", "hidden");
     $("aiKeyInput").focus();
     toast("حط مفتاح Gemini المجاني مرة واحدة بس — واللينك تحت");
     return;
@@ -493,7 +515,7 @@ $("btnAiSaveKey").addEventListener("click", async () => {
   const key = $("aiKeyInput").value.trim();
   if (!key) { toast("الصق المفتاح الأول"); return; }
   localStorage.setItem("hydrix_ai_key", key);
-  $("aiKeyRow").classList.add("hidden");
+  addClass("aiKeyRow", "hidden");
   toast("تم حفظ المفتاح على جهازك 🔑");
   await runAiAnalysis(key);
 });
@@ -503,17 +525,17 @@ async function runAiAnalysis(key) {
   const errEl = $("aiError");
   btn.disabled = true;
   btn.textContent = "جارٍ تحليل الصورة بالذكاء الاصطناعي…";
-  errEl.classList.add("hidden");
-  $("aiResult").classList.add("hidden");
+  if (errEl) errEl.classList.add("hidden");
+  addClass("aiResult", "hidden");
 
   try {
     const result = await analyzeWithAI(key);
     showAiResult(result);
   } catch (err) {
     errEl.textContent = "تعذر التحليل: " + err.message;
-    errEl.classList.remove("hidden");
+    if (errEl) errEl.classList.remove("hidden");
     if (/المفتاح/.test(err.message)) {
-      $("aiKeyRow").classList.remove("hidden");
+      removeClass("aiKeyRow", "hidden");
     }
   } finally {
     btn.disabled = false;
@@ -554,7 +576,7 @@ async function analyzeWithAI(key) {
 }
 
 function showAiResult(r) {
-  $("aiResult").classList.remove("hidden");
+  removeClass("aiResult", "hidden");
   const status = $("aiStatus");
   status.textContent = r.status || "—";
   status.className = "pill " + (r.status === "جيدة" ? "pill-ok" : r.status === "يوجد مشكلة" ? "pill-warn" : "pill-off");
@@ -673,10 +695,10 @@ function render() {
   $("humVal").textContent = state.hum;
   const rainChip = $("rainChip");
   if (state.rainForecast !== null && state.rainForecast >= 40) {
-    rainChip.classList.remove("hidden");
+    if (rainChip) rainChip.classList.remove("hidden");
     $("rainChipText").textContent = `احتمال مطر ${state.rainForecast}% خلال الساعات القادمة`;
   } else if (state.rain) {
-    rainChip.classList.remove("hidden");
+    if (rainChip) rainChip.classList.remove("hidden");
     $("rainChipText").textContent = "حساس المطر يرصد سقوط مطر الآن";
   }
 
@@ -748,7 +770,7 @@ function render() {
 
   // مصدر البيانات + هوية المزرعة
   $("soilSrc").textContent = HydrixBLE.isConnected() ? "مباشر من الحساس" : "وضع تجريبي";
-  $("soilSrc").classList.toggle("on", HydrixBLE.isConnected());
+  toggleClass("soilSrc", "on", HydrixBLE.isConnected());
   const cropTag = $("soilCrop");
   cropTag.hidden = !state.crop;
   cropTag.textContent = state.crop;
