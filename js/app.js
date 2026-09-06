@@ -683,12 +683,16 @@ function render() {
   $("manualDot").className = "dot " + (state.pumpOn ? "dot-green" : "dot-red");
   $("btnPumpOn").disabled = state.pumpOn;
   $("btnPumpOff").disabled = !state.pumpOn;
-  if (state.pumpOn && state.pumpStartTs) {
-    $("manualRuntime").classList.remove("hidden");
-    $("manualRuntime").textContent = "جاري الري منذ " + fmtElapsed(Date.now() - state.pumpStartTs);
-  } else {
-    $("manualRuntime").classList.add("hidden");
-  }
+  const manualRuntime = $("manualRuntime");
+   if (manualRuntime) {
+      if (state.pumpOn && state.pumpStartTs) {
+         manualRuntime.classList.remove("hidden");
+         manualRuntime.textContent =
+            "جاري الري منذ " + fmtElapsed(Date.now() - state.pumpStartTs);
+      } else {
+         manualRuntime.classList.add("hidden");
+      }
+
 
   // الري المؤقت
   if (!state.timedEndsAt) {
