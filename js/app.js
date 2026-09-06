@@ -206,16 +206,21 @@ $("btChip").addEventListener("click", async () => {
 });
 
 HydrixBLE.onStateChange = (connected) => {
-  state.connected = connected;
-  $("btDot").classList.toggle("dot-green", connected);
-  $("btDot").classList.toggle("dot-red", !connected);
-  $("btChipText").textContent = connected ? "متصل" : "ربط البلوتوث";
-  toast(connected ? "تم الاتصال بجهاز Hydrix عبر البلوتوث" : "انقطع الاتصال بالجهاز");
-  if (connected) {
-    // مزامنة حدود الري الذكي مع الجهاز
-    setTimeout(() => sendBLE(`TH:${state.thresholds.on},${state.thresholds.off}`), 600);
-  }
-  render();
+   state.connected = connected;
+   const btDot = $("btDot");
+   if (btDot) {
+      btDot.classList.toggle("dot-green", connected);
+      btDot.classList.toggle("dot-red", !connected);
+   }
+   const btText = $("btChipText");
+   if (btText) {
+      btText.textContent = connected ? "متصل" : "ربط البلوتوث";
+   }
+   toast(connected ? "تم الاتصال بجهاز Hydrix عبر البلوتوث" : "انقطع الاتصال بالجهاز");
+   if (connected) {
+      setTimeout(() => sendBLE(`TH:${state.thresholds.on},${state.thresholds.off}`), 600);
+   }
+   render();
 };
 
 HydrixBLE.onMessage = (data) => {
