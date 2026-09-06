@@ -1,0 +1,585 @@
+/* ============================================================
+   Hydrix — تصميم المزرعة الذكية
+   Palette:  خضرة عميقة #14532d · برعم #22c55e · ميّه #38bdf8
+             طين #d97706 · قشرة #f2f7f1 · حبر #0c2015
+   Type:     Alexandria (عناوين وأرقام) · IBM Plex Sans Arabic (نصوص)
+   ============================================================ */
+:root {
+  --bg: #f2f7f1;
+  --card: #ffffff;
+  --ink: #0c2015;
+  --ink-soft: #4a5f52;
+  --leaf: #14532d;
+  --sprout: #22c55e;
+  --sprout-dark: #15803d;
+  --sprout-soft: #e5f7ea;
+  --water: #38bdf8;
+  --water-soft: #e3f4fd;
+  --clay: #d97706;
+  --clay-soft: #fdf1e0;
+  --danger: #ef4444;
+  --danger-soft: #fdeaea;
+  --line: #e2ece1;
+  --radius: 20px;
+  --shadow: 0 2px 10px rgba(20, 83, 45, 0.06), 0 1px 3px rgba(20, 83, 45, 0.05);
+  --font-display: "Alexandria", "IBM Plex Sans Arabic", sans-serif;
+  --font-body: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+[hidden] { display: none !important; }
+
+html { height: 100%; }
+
+body {
+  font-family: var(--font-body);
+  background: linear-gradient(180deg, #e8f2e6 0%, var(--bg) 30%);
+  color: var(--ink);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* إطار الموبايل على الشاشات الكبيرة */
+.phone {
+  position: relative;
+  max-width: 430px;
+  margin-inline: auto;
+  min-height: 100dvh;
+  background: var(--bg);
+  box-shadow: 0 0 0 1px var(--line), 0 12px 40px rgba(12, 32, 21, 0.12);
+  overflow-x: clip;
+}
+
+/* ============ الشاشات والملاحة ============ */
+.screen { display: none; animation: screenIn 0.28s ease; }
+.screen.active { display: block; }
+
+@keyframes screenIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.content { padding: 4px 20px 110px; display: grid; gap: 16px; }
+
+/* ============ الترويسات ============ */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 18px 20px 12px;
+}
+.topbar-title { display: flex; align-items: center; gap: 12px; }
+.topbar-title h2 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; }
+.topbar-title p { font-size: 0.78rem; color: var(--ink-soft); }
+.logo-mini { width: 38px; height: 38px; flex: none; filter: drop-shadow(0 2px 4px rgba(34,197,94,.35)); }
+
+.subbar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 20px 10px;
+}
+.subbar h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; }
+.back {
+  width: 40px; height: 40px; border-radius: 14px; flex: none;
+  display: grid; place-items: center;
+  background: var(--card); color: var(--leaf);
+  font-size: 1.25rem; text-decoration: none; font-weight: 700;
+  box-shadow: var(--shadow);
+}
+.back:focus-visible { outline: 2px solid var(--sprout-dark); outline-offset: 2px; }
+
+.page-lead { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.8; padding: 2px 2px 0; }
+
+/* ============ البطاقات ============ */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+.card-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.card-tinted { background: linear-gradient(135deg, #eaf8ee, #ddf3e3); }
+
+.section { display: grid; gap: 10px; }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 0.98rem; font-weight: 700; color: var(--leaf);
+  display: flex; align-items: center; gap: 8px;
+}
+.live-chip {
+  font-family: var(--font-body); font-weight: 500; font-size: 0.68rem;
+  color: var(--ink-soft); background: var(--card); border: 1px solid var(--line);
+  border-radius: 999px; padding: 2px 10px;
+}
+.live-chip.on { color: var(--sprout-dark); border-color: #bbe8c9; background: var(--sprout-soft); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+/* ============ بطاقة التربة (البصمة البصرية) ============ */
+.soil-card { padding: 20px; }
+.soil-head { display: flex; justify-content: space-between; align-items: flex-start; }
+.soil-head h3 { font-family: var(--font-display); font-size: 1rem; margin-bottom: 8px; }
+.soil-emoji { font-size: 1.9rem; }
+.soil-value {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 3rem; line-height: 1.1; color: var(--leaf);
+  display: flex; align-items: baseline; gap: 4px;
+}
+.soil-value small { font-size: 1.1rem; font-weight: 700; color: var(--ink-soft); }
+
+.moist-bar {
+  position: relative; height: 14px; margin-top: 10px;
+  background: #e7efe6; border-radius: 999px; overflow: visible;
+}
+.moist-fill {
+  height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--water), var(--sprout));
+  transition: width 0.6s ease;
+}
+.moist-marker {
+  position: absolute; top: -12px; font-size: 0.85rem;
+  transform: translateX(50%); transition: inset-inline-start 0.6s ease;
+}
+.soil-note { margin-top: 12px; font-size: 0.85rem; color: var(--ink-soft); }
+
+/* ============ بطاقات الإحصائيات ============ */
+.stat-card { display: grid; gap: 4px; padding: 14px; }
+.stat-icon { font-size: 1.5rem; }
+.stat-val {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; color: var(--leaf);
+  display: flex; align-items: baseline; gap: 4px;
+}
+.stat-val small { font-size: 0.85rem; color: var(--ink-soft); font-weight: 700; }
+.stat-card p { font-size: 0.8rem; color: var(--ink-soft); }
+
+.last-irrigation { display: flex; align-items: center; gap: 14px; }
+.last-irrigation h3 { font-family: var(--font-display); font-size: 0.95rem; }
+.last-irrigation p { font-size: 1.05rem; font-weight: 700; color: var(--sprout-dark); }
+
+/* ============ أنواع الري ============ */
+.type-list { display: grid; gap: 10px; }
+.type-card { display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; }
+.type-card:focus-visible { outline: 2px solid var(--sprout-dark); outline-offset: 2px; }
+.type-icon {
+  width: 48px; height: 48px; border-radius: 16px; flex: none;
+  display: grid; place-items: center;
+}
+.icon-clay { background: var(--clay-soft); color: var(--clay); }
+.icon-water { background: var(--water-soft); color: #0284c7; }
+.icon-sprout { background: var(--sprout-soft); color: var(--sprout-dark); }
+.type-body h3 { font-family: var(--font-display); font-size: 0.98rem; }
+.type-body p { font-size: 0.78rem; color: var(--ink-soft); margin-top: 2px; }
+.type-arrow { margin-inline-start: auto; color: var(--sprout-dark); font-weight: 700; font-size: 1.1rem; }
+
+/* ============ العناصر الغذائية ============ */
+.nutrient-card { text-align: center; padding: 14px 8px; display: grid; gap: 6px; justify-items: center; }
+.nutrient-badge {
+  width: 34px; height: 34px; border-radius: 12px;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: #fff;
+}
+.nutrient-badge.n { background: var(--sprout); }
+.nutrient-badge.p { background: var(--water); }
+.nutrient-badge.k { background: var(--clay); }
+.nutrient-card p { font-size: 0.7rem; color: var(--ink-soft); }
+
+/* ============ الأزرار ============ */
+.btn {
+  font-family: var(--font-body); font-weight: 700; font-size: 1rem;
+  border: none; border-radius: 16px; padding: 14px 22px;
+  cursor: pointer; transition: transform 0.12s ease, filter 0.12s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn:focus-visible { outline: 3px solid rgba(34, 197, 94, 0.5); outline-offset: 2px; }
+.btn-primary { background: var(--sprout); color: #fff; box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35); }
+.btn-primary:hover { filter: brightness(1.05); }
+.btn-danger { background: var(--danger-soft); color: var(--danger); }
+.btn-xl { width: 100%; padding: 16px; font-size: 1.08rem; }
+.btn-block { width: 100%; margin-top: 14px; }
+.btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+
+.actions-row { display: grid; gap: 10px; }
+.hint { font-size: 0.75rem; color: var(--ink-soft); text-align: center; line-height: 1.7; }
+
+/* ============ شاشة الترحيب ============ */
+.screen-welcome.active { display: flex; min-height: 100dvh; }
+.welcome-inner {
+  margin: auto; width: 100%; padding: 40px 28px 28px;
+  display: grid; gap: 26px; justify-items: center; text-align: center;
+}
+.welcome-hero { display: grid; gap: 6px; justify-items: center; }
+.logo-badge {
+  width: 116px; height: 116px; border-radius: 36px;
+  background: var(--card); box-shadow: 0 14px 34px rgba(20, 83, 45, 0.18);
+  display: grid; place-items: center; margin-bottom: 14px;
+}
+.logo-mark { width: 74px; height: 74px; }
+.brand { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; color: var(--leaf); letter-spacing: 0.5px; }
+.brand-sub { font-family: var(--font-display); font-weight: 700; color: var(--sprout-dark); font-size: 0.95rem; }
+.welcome-text { color: var(--ink-soft); line-height: 2; font-size: 0.95rem; max-width: 320px; }
+.welcome-text strong { color: var(--leaf); }
+.welcome-footer { font-size: 0.72rem; color: var(--ink-soft); opacity: 0.8; }
+
+/* مشهد قطرة الماء المتساقطة */
+.drop-scene { position: relative; width: 90px; height: 54px; margin-bottom: 18px; }
+.drop-fall {
+  position: absolute; inset-inline-start: 39px; top: 0; width: 13px; height: 17px;
+  animation: fall 1.6s ease-in infinite;
+}
+@keyframes fall {
+  0%   { transform: translateY(-8px); opacity: 0; }
+  15%  { opacity: 1; }
+  70%  { transform: translateY(34px); opacity: 1; }
+  85%  { transform: translateY(38px) scale(1.15, 0.4); opacity: 0.9; }
+  100% { transform: translateY(38px) scale(1.4, 0.2); opacity: 0; }
+}
+.soil-mound {
+  position: absolute; bottom: 0; inset-inline: 12px; height: 16px;
+  background: #8a5a2b; border-radius: 50% 50% 12px 12px / 100% 100% 12px 12px;
+}
+.splash {
+  position: absolute; bottom: 12px; inset-inline-start: 44px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--water); opacity: 0;
+}
+.splash-1 { animation: splashL 1.6s ease-out infinite; }
+.splash-2 { animation: splashR 1.6s ease-out infinite; }
+@keyframes splashL {
+  0%, 70% { opacity: 0; transform: translate(0, 0); }
+  78% { opacity: 1; }
+  100% { transform: translate(-14px, -8px); opacity: 0; }
+}
+@keyframes splashR {
+  0%, 72% { opacity: 0; transform: translate(0, 0); }
+  80% { opacity: 1; }
+  100% { transform: translate(14px, -8px); opacity: 0; }
+}
+
+/* ============ شرائح الحالة ============ */
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 999px; padding: 8px 14px;
+  font-size: 0.8rem; font-weight: 700; color: var(--leaf);
+  cursor: pointer; box-shadow: var(--shadow);
+}
+.chip:focus-visible { outline: 2px solid var(--sprout-dark); outline-offset: 2px; }
+.chip-wide { cursor: default; justify-content: center; box-shadow: none; font-weight: 500; }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.dot-red { background: var(--danger); }
+.dot-green { background: var(--sprout); animation: pulse 1.4s ease infinite; }
+@keyframes pulse { 50% { opacity: 0.45; } }
+
+.pill {
+  display: inline-block; border-radius: 999px; padding: 4px 14px;
+  font-size: 0.78rem; font-weight: 700;
+}
+.pill-ok { background: var(--sprout-soft); color: var(--sprout-dark); }
+.pill-off { background: #eef1ee; color: var(--ink-soft); }
+.pill-warn { background: var(--clay-soft); color: var(--clay); }
+
+/* ============ صفحات أوضاع الري ============ */
+.mode-card { display: grid; justify-items: center; gap: 10px; text-align: center; padding: 28px 18px; }
+.mode-icon { width: 84px; height: 84px; border-radius: 28px; display: grid; place-items: center; font-size: 2.4rem; }
+.mode-caption { color: var(--ink-soft); font-size: 0.85rem; }
+.mode-status {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--sprout-dark);
+}
+.mode-runtime { font-size: 0.85rem; color: var(--water); font-weight: 700; }
+
+/* الري المؤقت */
+.dur-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dur-chip {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+  background: var(--card); color: var(--ink);
+  border: 2px solid var(--line); border-radius: 18px; padding: 18px 10px;
+  cursor: pointer; transition: all 0.15s ease;
+}
+.dur-chip:focus-visible { outline: 2px solid var(--sprout-dark); outline-offset: 2px; }
+.dur-chip.selected {
+  background: var(--sprout); border-color: var(--sprout); color: #fff;
+  box-shadow: 0 8px 18px rgba(34, 197, 94, 0.35);
+}
+.timed-run { animation: screenIn 0.3s ease; }
+.countdown {
+  font-family: var(--font-display); font-weight: 800; font-size: 3rem; color: var(--leaf);
+  font-variant-numeric: tabular-nums;
+}
+.fill-water { background: linear-gradient(90deg, var(--water), #7dd3fc); }
+
+/* الري الذكي */
+.smart-msg {
+  margin-top: 12px; border-radius: 14px; padding: 12px 14px;
+  font-size: 0.85rem; font-weight: 500; line-height: 1.8;
+}
+.smart-msg.ok { background: var(--sprout-soft); color: var(--sprout-dark); }
+.smart-msg.warn { background: var(--clay-soft); color: var(--clay); }
+.smart-msg.rain { background: var(--water-soft); color: #0369a1; }
+.smart-logic { font-size: 0.88rem; line-height: 2; color: var(--ink-soft); }
+.smart-logic strong { color: var(--leaf); }
+
+/* ============ تحليل النبات ============ */
+.plant-zone { min-height: 210px; display: grid; place-items: center; overflow: hidden; }
+.plant-empty { display: grid; justify-items: center; gap: 12px; color: var(--ink-soft); }
+.plant-cam {
+  width: 76px; height: 76px; border-radius: 26px; background: var(--sprout-soft);
+  display: grid; place-items: center; font-size: 2rem;
+}
+.plant-preview { position: relative; width: 100%; }
+.plant-preview img { width: 100%; max-height: 300px; object-fit: cover; display: block; border-radius: var(--radius); }
+.analyzing {
+  position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 10px;
+  background: rgba(12, 32, 21, 0.55); color: #fff; font-weight: 700; font-size: 0.9rem;
+  border-radius: var(--radius); backdrop-filter: blur(2px);
+}
+.spinner {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.35); border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.plant-result .card { display: grid; gap: 10px; }
+.verdict { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--leaf); }
+.ratio-row { display: grid; grid-template-columns: 74px 1fr 42px; align-items: center; gap: 10px; font-size: 0.8rem; }
+.ratio-row b { font-variant-numeric: tabular-nums; }
+.ratio-bar { height: 10px; border-radius: 999px; background: #edf2ed; overflow: hidden; }
+.ratio-bar i { display: block; height: 100%; border-radius: 999px; transition: width 0.5s ease; }
+.r-green { background: var(--sprout); }
+.r-yellow { background: #eab308; }
+.r-brown { background: #92400e; }
+.advice { background: var(--sprout-soft); border-radius: 14px; padding: 12px 14px; font-size: 0.85rem; line-height: 1.9; color: var(--sprout-dark); }
+
+/* ============ الكاميرا ============ */
+.screen-camera.active { display: flex; flex-direction: column; min-height: 100dvh; background: #08160e; }
+.subbar-dark h2 { color: #fff; }
+.back-dark { background: rgba(255, 255, 255, 0.12); color: #fff; box-shadow: none; }
+.camera-stage {
+  position: relative; flex: 1; overflow: hidden;
+  min-height: 380px; background: #08160e;
+}
+.camera-stage video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; background: #08160e;
+}
+.cam-guide {
+  position: absolute; inset: 14% 9%;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 26px; pointer-events: none;
+}
+.cam-guide::after {
+  content: ""; position: absolute; top: 10px; inset-inline-start: 12px;
+  width: 22px; height: 22px; border-radius: 8px;
+  border-top: 3px solid var(--sprout); border-inline-start: 3px solid var(--sprout);
+}
+.cam-error {
+  position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 14px;
+  color: #fff; text-align: center; padding: 24px;
+}
+.cam-error span { font-size: 2.4rem; }
+.cam-error p { font-size: 0.9rem; line-height: 1.9; max-width: 280px; }
+.cam-controls {
+  display: flex; align-items: center; justify-content: center; gap: 34px;
+  padding: 22px 0 calc(26px + env(safe-area-inset-bottom));
+  background: #08160e;
+}
+.cam-shutter {
+  width: 78px; height: 78px; border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.85);
+  background: transparent; cursor: pointer;
+  display: grid; place-items: center;
+}
+.cam-shutter span {
+  width: 58px; height: 58px; border-radius: 50%; background: #fff;
+  transition: transform 0.12s ease;
+}
+.cam-shutter:active span { transform: scale(0.85); }
+.cam-shutter:focus-visible { outline: 3px solid var(--sprout); outline-offset: 3px; }
+.cam-side {
+  width: 54px; height: 54px; border-radius: 50%; border: none;
+  background: rgba(255, 255, 255, 0.14); color: #fff; font-size: 1.25rem;
+  cursor: pointer;
+}
+.cam-side:focus-visible { outline: 3px solid var(--sprout); outline-offset: 2px; }
+
+/* ============ تحليل الذكاء الاصطناعي ============ */
+.ai-card { display: grid; gap: 12px; }
+.ai-desc { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.8; }
+.ai-key-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.ai-key-row input {
+  font-family: var(--font-body); font-size: 0.85rem;
+  border: 2px solid var(--line); border-radius: 14px; padding: 12px 14px;
+  background: var(--bg); color: var(--ink);
+}
+.ai-key-row input:focus { outline: 2px solid var(--sprout); border-color: transparent; }
+.ai-result { display: grid; gap: 10px; background: var(--bg); border-radius: 16px; padding: 14px; }
+.ai-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ai-head b { font-family: var(--font-display); font-size: 1rem; }
+.ai-signs { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.9; }
+.ai-advice { display: grid; gap: 6px; padding-inline-start: 18px; font-size: 0.82rem; line-height: 1.8; }
+.ai-error { color: var(--danger); font-size: 0.82rem; font-weight: 500; text-align: center; }
+.btn-ghost {
+  background: var(--card); color: var(--leaf);
+  border: 2px solid var(--line); box-shadow: none;
+}
+
+/* ============ سجل النشاط ============ */
+.legend-row { display: flex; gap: 16px; margin-top: 10px; font-size: 0.72rem; color: var(--ink-soft); }
+.lg { display: inline-flex; align-items: center; gap: 6px; }
+.lg-line { width: 16px; height: 3px; border-radius: 2px; background: var(--sprout); display: inline-block; }
+.lg-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.lg-dot.on { background: var(--clay); }
+.lg-dot.off { background: var(--water); }
+
+.log-card { padding: 6px 18px; }
+.log-list { display: grid; }
+.log-row {
+  display: flex; align-items: center; gap: 12px; padding: 11px 2px;
+}
+.log-row + .log-row { border-top: 1px dashed var(--line); }
+.log-icon {
+  width: 40px; height: 40px; border-radius: 14px; flex: none;
+  display: grid; place-items: center; font-size: 1.15rem; background: var(--sprout-soft);
+}
+.log-icon.stop { background: #eef1ee; }
+.log-body { display: grid; gap: 2px; }
+.log-body b { font-size: 0.88rem; font-weight: 700; }
+.log-body span { font-size: 0.72rem; color: var(--ink-soft); }
+
+/* سلايدرز الحدود */
+.th-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 0.85rem; color: var(--ink-soft); margin-top: 10px;
+}
+.th-row output {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--leaf);
+}
+input[type="range"] {
+  width: 100%; appearance: none; height: 10px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--clay-soft), var(--sprout-soft), var(--water-soft));
+  outline: none; margin-top: 6px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--sprout); border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(20, 83, 45, 0.35); cursor: pointer;
+}
+input[type="range"]:focus-visible { outline: 3px solid rgba(34, 197, 94, 0.5); outline-offset: 2px; }
+
+/* ============ عن المشروع ============ */
+.tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tech-card { display: grid; gap: 6px; padding: 16px; }
+.tech-card span { font-size: 1.5rem; }
+.tech-card h3 { font-family: var(--font-display); font-size: 0.92rem; }
+.tech-card p { font-size: 0.74rem; color: var(--ink-soft); line-height: 1.7; }
+
+.team-card { display: grid; gap: 4px; padding: 10px 18px; }
+.team-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 2px; font-weight: 500; font-size: 0.95rem;
+}
+.team-row + .team-row { border-top: 1px dashed var(--line); }
+.team-row span { font-size: 1.1rem; }
+
+.about-footer { text-align: center; font-size: 0.75rem; color: var(--ink-soft); padding: 10px 0 4px; }
+
+/* ============ شريط التنقل السفلي ============ */
+.bottomnav {
+  position: fixed; bottom: 0; z-index: 20;
+  width: min(430px, 100%);
+  inset-inline: 0; margin-inline: auto;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
+}
+.nav-item {
+  display: grid; justify-items: center; gap: 3px;
+  text-decoration: none; color: var(--ink-soft);
+  font-size: 0.7rem; font-weight: 700; padding: 6px 4px; border-radius: 12px;
+}
+.nav-item span { font-size: 1.25rem; }
+.nav-item.active { color: var(--sprout-dark); background: var(--sprout-soft); }
+
+/* ============ الزر العائم والتوست ============ */
+.fab {
+  position: fixed; z-index: 20; bottom: 86px; inset-inline-end: max(16px, calc(50vw - 199px));
+  width: 54px; height: 54px; border-radius: 18px; border: none;
+  background: var(--leaf); color: #fff; font-size: 1.3rem;
+  box-shadow: 0 10px 24px rgba(12, 32, 21, 0.35); cursor: pointer;
+}
+.fab:focus-visible { outline: 3px solid rgba(34, 197, 94, 0.6); outline-offset: 2px; }
+
+.toast {
+  position: fixed; z-index: 50; bottom: 24px;
+  inset-inline: 0; margin-inline: auto; width: fit-content; max-width: 86%;
+  background: var(--ink); color: #fff;
+  border-radius: 14px; padding: 12px 20px;
+  font-size: 0.85rem; font-weight: 500; text-align: center;
+  opacity: 0; transform: translateY(12px); pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.toast.show { opacity: 1; transform: none; }
+
+.hidden { display: none !important; }
+
+/* ============ حركة مخفّضة وإتاحة ============ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+@media (max-width: 360px) {
+  .grid-3 { gap: 8px; }
+  .soil-value { font-size: 2.4rem; }
+}
+
+/* ============ نظام الأيقونات SVG ============ */
+.ic {
+  width: 1.25em; height: 1.25em;
+  fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  flex: none; vertical-align: middle;
+}
+.ic-big { width: 3rem; height: 3rem; stroke-width: 1.6; }
+.chip .ic { width: 15px; height: 15px; }
+.nutrient-badge .ic { width: 18px; height: 18px; }
+.back .ic { width: 20px; height: 20px; }
+.log-icon .ic { width: 20px; height: 20px; }
+.team-row .ic { width: 18px; height: 18px; color: var(--ink-soft); }
+.tech-icon { color: var(--leaf); }
+.soil-emoji { color: var(--sprout); }
+.type-arrow .ic { width: 18px; height: 18px; }
+
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+.iconbtn {
+  width: 40px; height: 40px; border-radius: 14px;
+  border: 1px solid var(--line); background: var(--card); color: var(--leaf);
+  display: grid; place-items: center; cursor: pointer; box-shadow: var(--shadow);
+}
+.iconbtn .ic { width: 20px; height: 20px; }
+.iconbtn:focus-visible { outline: 2px solid var(--sprout-dark); outline-offset: 2px; }
+
+/* ============ الإعدادات ============ */
+.field { display: grid; gap: 6px; margin-top: 6px; }
+.field span { font-size: 0.8rem; color: var(--ink-soft); }
+.field input {
+  font-family: var(--font-body); font-size: 0.95rem;
+  border: 2px solid var(--line); border-radius: 14px; padding: 12px 14px;
+  background: var(--bg); color: var(--ink);
+}
+.field input:focus { outline: 2px solid var(--sprout); border-color: transparent; }
+.field-label { font-size: 0.8rem; color: var(--ink-soft); margin-top: 14px; line-height: 1.7; }
+.crop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+.crop-chip {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.85rem;
+  padding: 10px 6px; border-radius: 12px;
+  border: 2px solid var(--line); background: var(--card); color: var(--ink);
+  cursor: pointer;
+}
+.crop-chip.selected { background: var(--sprout); border-color: var(--sprout); color: #fff; }
+.crop-tag {
+  display: inline-block; margin-inline-start: 6px;
+  font-size: 0.72rem; color: var(--ink-soft);
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 999px; padding: 2px 10px;
+}
+.fab.listening { background: var(--danger); animation: pulse 0.9s ease infinite; }

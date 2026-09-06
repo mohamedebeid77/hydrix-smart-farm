@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#14532d" />
+  <meta name="description" content="Hydrix — نظام مزرعة ذكية لمتابعة التربة وإدارة الري بالذكاء الاصطناعي وإنترنت الأشياء" />
+  <title>Hydrix — المزرعة الذكية</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- مكتبة الأيقونات (SVG Sprite) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7 20v-6"/><path d="M12 20V8"/><path d="M17 20v-9"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A8 8 0 0 1 3 12C3 6.5 8 3 20 3c-.3 12-3.5 17-9 17Z"/><path d="M3.5 19.5C7 14 10.5 10.5 15.5 7.5"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 13c0-3.5-2.5-6-7-6 0 4.5 2.5 6 7 6Z"/><path d="M12 10.5c0-3 2.2-5 6.5-5 0 4-2.5 5.5-6.5 5.5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M12 11.5V16"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.5s6.5 7.2 6.5 11.3A6.5 6.5 0 0 1 5.5 14.8C5.5 10.7 12 3.5 12 3.5Z"/></symbol>
+    <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M10 4a2 2 0 0 1 4 0v9.3a4.5 4.5 0 1 1-4 0Z"/><circle cx="12" cy="17" r="1.6"/></symbol>
+    <symbol id="i-rain" viewBox="0 0 24 24"><path d="M7 13a4 4 0 0 1 .6-7.9A5 5 0 0 1 17 6.5 3.5 3.5 0 0 1 16.5 13H7Z"/><path d="M8.5 16.5l-1 2.5M12.5 16.5l-1 2.5M16.5 16.5l-1 2.5"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 8h9M17 8h3M4 16h3M11 16h9"/><circle cx="15" cy="8" r="2"/><circle cx="9" cy="16" r="2"/></symbol>
+    <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></symbol>
+    <symbol id="i-robot" viewBox="0 0 24 24"><rect x="5" y="9" width="14" height="10" rx="3"/><path d="M12 9V5.5"/><circle cx="12" cy="4" r="1.2"/><path d="M9.5 13.5v1.5M14.5 13.5v1.5"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8.5h3.2L9 5.5h6l1.8 3H20a1 1 0 0 1 1 1V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13.5" r="3.4"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="9.5" r="1.6"/><path d="M4.5 17.5 10 12l4 4 2.5-2.5 3.5 3.5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6.5 16v-5a5.5 5.5 0 0 1 11 0v5l1.8 2.7H4.7Z"/><path d="M10 21.5h4"/></symbol>
+    <symbol id="i-bt" viewBox="0 0 24 24"><path d="M7.5 7.5 16.5 16 12 19.5v-15L16.5 8 7.5 16.5"/></symbol>
+    <symbol id="i-shower" viewBox="0 0 24 24"><path d="M5 14h14l-1.2-6H6.2Z"/><path d="M12 8V4.5"/><path d="M8 17.5l-.7 2M12 17.5l-.7 2M16 17.5l-.7 2"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9.5 3h5M11 3v6.2L5.8 18.4A1.8 1.8 0 0 0 7.4 21h9.2a1.8 1.8 0 0 0 1.6-2.6L13 9.2V3"/><path d="M8 15h8"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 19 5.8V12c0 4.2-3 7.3-7 9-4-1.7-7-4.8-7-9V5.8Z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 3.5 20 6.5l-3 3"/><path d="M4 12V10a3.5 3.5 0 0 1 3.5-3.5H20"/><path d="M7 20.5 4 17.5l3-3"/><path d="M20 12v2a3.5 3.5 0 0 1-3.5 3.5H4"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.5 4 5.5 4 9s-1.3 6.5-4 9c-2.7-2.5-4-5.5-4-9s1.3-6.5 4-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9.5 5.5 16 12l-6.5 6.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-flip" viewBox="0 0 24 24"><path d="M4 8a8 8 0 0 1 14.5-2.5L20 7"/><path d="M20 3v4h-4"/><path d="M20 16a8 8 0 0 1-14.5 2.5L4 17"/><path d="M4 21v-4h4"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2"/></symbol>
+  </svg>
+
+  <div id="app" class="phone">
+
+    <!-- ============ 1) شاشة الترحيب ============ -->
+    <section class="screen screen-welcome" id="screen-welcome">
+      <div class="welcome-inner">
+        <div class="welcome-hero">
+          <div class="drop-scene" aria-hidden="true">
+            <svg class="drop-fall" viewBox="0 0 24 32"><path d="M12 1s8 11 8 19a8 8 0 0 1-16 0C4 12 12 1 12 1Z" fill="var(--water)"/></svg>
+            <div class="soil-mound"></div>
+            <div class="splash splash-1"></div>
+            <div class="splash splash-2"></div>
+          </div>
+          <div class="logo-badge">
+            <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M32 3C45.5 11.5 55 25 55 38.5 55 51 44.6 60 32 60S9 51 9 38.5C9 25 18.5 11.5 32 3Z" fill="var(--sprout)"/>
+              <path d="M32 20s-9.5 14-9.5 22.5a9.5 9.5 0 0 0 19 0C41.5 34 32 20 32 20Z" fill="#fff"/>
+              <path d="M24.5 41.5 39 33" stroke="var(--sprout)" stroke-width="2.6" stroke-linecap="round" opacity=".9"/>
+            </svg>
+          </div>
+          <h1 class="brand">Hydrix</h1>
+          <p class="brand-sub">المزرعة الذكية</p>
+        </div>
+
+        <p class="welcome-text">
+          نظام ذكي لمتابعة التربة وإدارة الري باستخدام
+          <strong>الذكاء الاصطناعي</strong> و<strong>إنترنت الأشياء</strong> —
+          يراقب رطوبة التربة وحالة الطقس ويسقي نباتك في الوقت المناسب.
+        </p>
+
+        <button class="btn btn-primary btn-xl" id="btnStart">ابدأ</button>
+
+        <footer class="welcome-footer">
+          من تنفيذ طلاب مدرسة WE للتكنولوجيا التطبيقية
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============ 2) لوحة التحكم ============ -->
+    <section class="screen" id="screen-dashboard">
+      <header class="topbar">
+        <div class="topbar-title">
+          <svg class="logo-mini" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M32 3C45.5 11.5 55 25 55 38.5 55 51 44.6 60 32 60S9 51 9 38.5C9 25 18.5 11.5 32 3Z" fill="var(--sprout)"/>
+            <path d="M32 20s-9.5 14-9.5 22.5a9.5 9.5 0 0 0 19 0C41.5 34 32 20 32 20Z" fill="#fff"/>
+          </svg>
+          <div>
+            <h2>لوحة التحكم</h2>
+            <p id="dashSub">مزرعة Hydrix الذكية — إدارة التربة والري</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="chip" id="btChip" title="ربط الجهاز عبر البلوتوث">
+            <svg class="ic"><use href="#i-bt"/></svg><span id="btChipText">ربط</span>
+          </button>
+          <button class="iconbtn" id="btnSettings" aria-label="الإعدادات">
+            <svg class="ic"><use href="#i-gear"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- بطاقة حالة التربة -->
+        <article class="card soil-card">
+          <div class="soil-head">
+            <div>
+              <h3>حالة التربة <span class="live-chip" id="soilSrc">وضع تجريبي</span></h3>
+              <span class="pill pill-ok" id="soilStatusPill">جيدة</span>
+              <span class="crop-tag" id="soilCrop" hidden></span>
+            </div>
+            <span class="soil-emoji" aria-hidden="true"><svg class="ic"><use href="#i-sprout"/></svg></span>
+          </div>
+          <div class="soil-value"><span id="soilMoisture">45</span><small>%</small></div>
+          <div class="moist-bar" aria-hidden="true">
+            <div class="moist-fill" id="moistFill" style="width:45%"></div>
+            <div class="moist-marker" id="moistMarker" style="inset-inline-start:45%"><svg class="ic"><use href="#i-drop"/></svg></div>
+          </div>
+          <p class="soil-note" id="soilNote">الرطوبة مناسبة — التربة في حالة جيدة</p>
+        </article>
+
+        <!-- حالة الطقس -->
+        <section class="section">
+          <h4 class="section-title">حالة الطقس <span class="live-chip" id="weatherSrc">بيانات تجريبية</span></h4>
+          <div class="grid-2">
+            <article class="card stat-card">
+              <span class="stat-icon" aria-hidden="true"><svg class="ic"><use href="#i-thermo"/></svg></span>
+              <div class="stat-val"><span id="tempVal">28</span><small>°م</small></div>
+              <p>درجة الحرارة</p>
+            </article>
+            <article class="card stat-card">
+              <span class="stat-icon" aria-hidden="true"><svg class="ic"><use href="#i-drop"/></svg></span>
+              <div class="stat-val"><span id="humVal">55</span><small>%</small></div>
+              <p>الرطوبة الجوية</p>
+            </article>
+          </div>
+          <div class="chip chip-wide hidden" id="rainChip">
+            <svg class="ic"><use href="#i-rain"/></svg><span id="rainChipText"></span>
+          </div>
+        </section>
+
+        <!-- آخر عملية ري -->
+        <article class="card card-tinted last-irrigation">
+          <span class="stat-icon" aria-hidden="true"><svg class="ic"><use href="#i-shower"/></svg></span>
+          <div>
+            <h3>آخر عملية ري</h3>
+            <p id="lastIrrigation">منذ 15 دقيقة</p>
+          </div>
+        </article>
+
+        <!-- أنواع الري -->
+        <section class="section">
+          <h4 class="section-title">أنواع الري</h4>
+          <div class="type-list">
+            <a class="card type-card" href="#manual">
+              <span class="type-icon icon-clay" aria-hidden="true"><svg class="ic"><use href="#i-sliders"/></svg></span>
+              <div class="type-body">
+                <h3>الري اليدوي</h3>
+                <p>شغّل أو أوقف الري بنفسك في أي وقت</p>
+              </div>
+              <span class="type-arrow" aria-hidden="true"><svg class="ic"><use href="#i-chev-r"/></svg></span>
+            </a>
+            <a class="card type-card" href="#timed">
+              <span class="type-icon icon-water" aria-hidden="true"><svg class="ic"><use href="#i-timer"/></svg></span>
+              <div class="type-body">
+                <h3>الري المؤقت</h3>
+                <p>حدد مدة ري محددة: 5 أو 10 أو 15 أو 30 دقيقة</p>
+              </div>
+              <span class="type-arrow" aria-hidden="true"><svg class="ic"><use href="#i-chev-r"/></svg></span>
+            </a>
+            <a class="card type-card" href="#smart">
+              <span class="type-icon icon-sprout" aria-hidden="true"><svg class="ic"><use href="#i-robot"/></svg></span>
+              <div class="type-body">
+                <h3>الري الذكي</h3>
+                <p>النظام يقرر تلقائياً بناءً على رطوبة التربة</p>
+              </div>
+              <span class="type-arrow" aria-hidden="true"><svg class="ic"><use href="#i-chev-r"/></svg></span>
+            </a>
+          </div>
+        </section>
+
+        <!-- مؤشرات التربة (محسوبة من بيانات فعلية) -->
+        <section class="section">
+          <h4 class="section-title">مؤشرات التربة <span class="live-chip">محسوبة من بياناتك</span></h4>
+          <div class="grid-3">
+            <article class="card nutrient-card">
+              <span class="nutrient-badge n"><svg class="ic"><use href="#i-shield"/></svg></span>
+              <div class="stat-val"><span id="indHealth">—</span><small>/100</small></div>
+              <p>صحة التربة</p>
+            </article>
+            <article class="card nutrient-card">
+              <span class="nutrient-badge p"><svg class="ic"><use href="#i-repeat"/></svg></span>
+              <div class="stat-val"><span id="indStab">—</span></div>
+              <p>استقرار الرطوبة</p>
+            </article>
+            <article class="card nutrient-card">
+              <span class="nutrient-badge k"><svg class="ic"><use href="#i-flask"/></svg></span>
+              <div class="stat-val"><span id="indReg">—</span></div>
+              <p>انتظام الري</p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <!-- زر التحكم الصوتي -->
+      <button class="fab" id="btnVoice" title="تحكم صوتي بالعربي" hidden><svg class="ic"><use href="#i-mic"/></svg></button>
+    </section>
+
+    <!-- ============ 3) الري اليدوي ============ -->
+    <section class="screen" id="screen-manual">
+      <header class="subbar">
+        <a class="back" href="#dashboard" aria-label="رجوع"><svg class="ic"><use href="#i-chev-r"/></svg></a>
+        <h2>الري اليدوي</h2>
+      </header>
+      <div class="content">
+        <article class="card mode-card">
+          <span class="mode-icon icon-clay" aria-hidden="true"><svg class="ic"><use href="#i-sliders"/></svg></span>
+          <p class="mode-caption">التحكم اليدوي — أنت من يقرر</p>
+          <div class="mode-status">
+            <span class="dot dot-green" id="manualDot"></span>
+            <span id="manualStatus">حالة الري: متوقف</span>
+          </div>
+          <p class="mode-runtime hidden" id="manualRuntime">جاري الري منذ 0:00</p>
+        </article>
+
+        <div class="actions-row">
+          <button class="btn btn-primary" id="btnPumpOn">تشغيل الري</button>
+          <button class="btn btn-danger" id="btnPumpOff">إيقاف الري</button>
+        </div>
+        <p class="hint">يتم إرسال الأمر إلى المضخة عبر البلوتوث عند الاتصال بجهاز Hydrix.</p>
+      </div>
+    </section>
+
+    <!-- ============ 4) الري المؤقت ============ -->
+    <section class="screen" id="screen-timed">
+      <header class="subbar">
+        <a class="back" href="#dashboard" aria-label="رجوع"><svg class="ic"><use href="#i-chev-r"/></svg></a>
+        <h2>الري المؤقت</h2>
+      </header>
+      <div class="content">
+        <p class="page-lead">اختر مدة الري وسيبدأ النظام ثم يتوقف تلقائياً عند انتهاء الوقت.</p>
+
+        <div class="dur-grid" id="durGrid">
+          <button class="dur-chip" data-min="5">5 دقائق</button>
+          <button class="dur-chip selected" data-min="10">10 دقائق</button>
+          <button class="dur-chip" data-min="15">15 دقيقة</button>
+          <button class="dur-chip" data-min="30">30 دقيقة</button>
+        </div>
+
+        <div class="timed-run hidden" id="timedRun">
+          <article class="card mode-card">
+            <span class="mode-icon icon-water" aria-hidden="true"><svg class="ic"><use href="#i-timer"/></svg></span>
+            <div class="countdown" id="timedCountdown">10:00</div>
+            <div class="moist-bar"><div class="moist-fill fill-water" id="timedBar" style="width:0%"></div></div>
+          </article>
+        </div>
+
+        <button class="btn btn-primary btn-xl" id="btnTimedStart">بدء الري — 10 دقائق</button>
+        <button class="btn btn-danger btn-xl hidden" id="btnTimedStop">إيقاف الري الآن</button>
+      </div>
+    </section>
+
+    <!-- ============ 5) الري الذكي ============ -->
+    <section class="screen" id="screen-smart">
+      <header class="subbar">
+        <a class="back" href="#dashboard" aria-label="رجوع"><svg class="ic"><use href="#i-chev-r"/></svg></a>
+        <h2>الري الذكي</h2>
+      </header>
+      <div class="content">
+        <article class="card mode-card">
+          <span class="mode-icon icon-sprout" aria-hidden="true"><svg class="ic"><use href="#i-robot"/></svg></span>
+          <p class="mode-caption">نظام التشغيل التلقائي</p>
+          <span class="pill pill-ok" id="smartChip">مفعل</span>
+          <button class="btn btn-danger btn-block" id="btnSmartToggle">إيقاف الري الذكي</button>
+          <button class="chip chip-wide notifyToggle" id="btnNotify"><svg class="ic"><use href="#i-bell"/></svg><span class="notify-text">التنبيهات: غير مفعلة</span></button>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">رطوبة التربة الحالية</h3>
+          <div class="soil-value"><span id="smartMoisture">45</span><small>%</small></div>
+          <div class="moist-bar" aria-hidden="true">
+            <div class="moist-fill" id="smartFill" style="width:45%"></div>
+          </div>
+          <p class="smart-msg ok" id="smartMsg">الرطوبة مناسبة — لا توجد حاجة للري في الوقت الحالي</p>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">حدود الري الذكي</h3>
+          <div class="th-row"><span>يبدأ الري عند</span><output id="thOnVal">40%</output></div>
+          <input type="range" id="thOn" min="25" max="55" step="5" value="40" />
+          <div class="th-row"><span>يتوقف الري عند</span><output id="thOffVal">60%</output></div>
+          <input type="range" id="thOff" min="45" max="75" step="5" value="60" />
+          <p class="hint">تُحفظ على جهازك وتُرسل إلى الـ ESP32 عند الاتصال</p>
+        </article>
+
+        <article class="card card-tinted">
+          <h3 class="card-title">طريقة عمل النظام</h3>
+          <p class="smart-logic">يبدأ الري تلقائياً عندما تنخفض رطوبة التربة عن <strong id="logicOn">40%</strong>، ويتوقف عندما تصل الرطوبة إلى <strong id="logicOff">60%</strong>. وإذا رُصد مطر أو توقعت الأرصاد سقوط مطر، يؤجل الري لتوفير المياه.</p>
+          <div class="chip chip-wide">
+            <svg class="ic"><use href="#i-drop"/></svg>
+            <span>تم توفير ما يقارب <strong id="waterSaved">1.5</strong> لتر مياه — تقدير مبني على سجل الري الذكي</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 6) تحليل النبات ============ -->
+    <section class="screen" id="screen-plant">
+      <header class="subbar">
+        <a class="back" href="#dashboard" aria-label="رجوع"><svg class="ic"><use href="#i-chev-r"/></svg></a>
+        <h2>تحليل النبات</h2>
+      </header>
+      <div class="content">
+        <p class="page-lead">اختر صورة للنبات ليتم تحليل حالته تلقائياً وفحص صحة الأوراق.</p>
+
+        <div class="plant-zone card" id="plantZone">
+          <div class="plant-empty" id="plantEmpty">
+            <span class="plant-cam" aria-hidden="true"><svg class="ic"><use href="#i-camera"/></svg></span>
+            <p>لم يتم تحليل أي صورة بعد</p>
+          </div>
+          <div class="plant-preview hidden" id="plantPreview">
+            <img id="plantImg" alt="صورة النبات" />
+            <div class="analyzing hidden" id="analyzing">
+              <span class="spinner"></span> جارٍ تحليل الصورة…
+            </div>
+          </div>
+        </div>
+
+        <div class="plant-result hidden" id="plantResult">
+          <article class="card">
+            <h3 class="card-title">نتيجة التحليل المحلي</h3>
+            <p class="verdict" id="plantVerdict">—</p>
+            <div class="ratio-row"><span>أوراق سليمة</span><div class="ratio-bar"><i id="ratioGreen" class="r-green"></i></div><b id="ratioGreenVal">0%</b></div>
+            <div class="ratio-row"><span>اصفرار</span><div class="ratio-bar"><i id="ratioYellow" class="r-yellow"></i></div><b id="ratioYellowVal">0%</b></div>
+            <div class="ratio-row"><span>بقع بنية</span><div class="ratio-bar"><i id="ratioBrown" class="r-brown"></i></div><b id="ratioBrownVal">0%</b></div>
+            <p class="advice" id="plantAdvice"></p>
+            <p class="hint">يعمل بدون إنترنت بفحص ألوان الورقة مباشرة على جهازك.</p>
+          </article>
+        </div>
+
+        <div class="plant-result hidden" id="aiCard">
+          <article class="card ai-card">
+            <h3 class="card-title">التحليل بالذكاء الاصطناعي</h3>
+            <p class="ai-desc">تحليل عميق للصورة بنموذج Gemini: يتعرف على نوع النبات والمشكلة بالاسم ويعطي خطة علاج (يحتاج إنترنت).</p>
+            <button class="btn btn-primary btn-block" id="btnAiAnalyze">حلل الصورة بالذكاء الاصطناعي</button>
+            <div class="ai-key-row hidden" id="aiKeyRow">
+              <input type="password" id="aiKeyInput" placeholder="الصق مفتاح Gemini هنا" dir="ltr" />
+              <button class="btn btn-primary" id="btnAiSaveKey">حفظ</button>
+            </div>
+            <p class="hint" id="aiNote">مفتاح مجاني من <span dir="ltr">aistudio.google.com/apikey</span> — يُحفظ على جهازك فقط</p>
+            <div class="ai-result hidden" id="aiResult">
+              <div class="ai-head">
+                <span class="pill pill-ok" id="aiStatus">—</span>
+                <b id="aiProblem">—</b>
+              </div>
+              <div class="ratio-row"><span>الثقة</span><div class="ratio-bar"><i id="aiConf" class="r-green"></i></div><b id="aiConfVal">0%</b></div>
+              <p class="ai-signs" id="aiSigns"></p>
+              <ul class="ai-advice" id="aiAdvice"></ul>
+            </div>
+            <p class="ai-error hidden" id="aiError"></p>
+          </article>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn btn-primary btn-xl" id="btnOpenCamera"><svg class="ic"><use href="#i-camera"/></svg> فتح الكاميرا</button>
+          <button class="btn btn-ghost btn-xl" id="btnChoose"><svg class="ic"><use href="#i-image"/></svg> اختيار صورة من الجهاز</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7) واجهة الكاميرا ============ -->
+    <section class="screen screen-camera" id="screen-camera">
+      <header class="subbar subbar-dark">
+        <a class="back back-dark" href="#plant" aria-label="إغلاق الكاميرا"><svg class="ic"><use href="#i-x"/></svg></a>
+        <h2>التقاط صورة النبات</h2>
+      </header>
+      <div class="camera-stage">
+        <video id="camVideo" autoplay playsinline muted></video>
+        <div class="cam-guide" aria-hidden="true"></div>
+        <div class="cam-error hidden" id="camError">
+          <svg class="ic ic-big"><use href="#i-camera"/></svg>
+          <p id="camErrorText"></p>
+          <button class="btn btn-primary" id="btnCamRetry">إعادة المحاولة</button>
+        </div>
+      </div>
+      <div class="cam-controls">
+        <button class="cam-side" id="btnCamFlip" aria-label="تبديل الكاميرا"><svg class="ic"><use href="#i-flip"/></svg></button>
+        <button class="cam-shutter" id="btnCamShot" aria-label="التقاط الصورة"><span></span></button>
+        <button class="cam-side" id="btnCamGallery" aria-label="اختيار من المعرض"><svg class="ic"><use href="#i-image"/></svg></button>
+      </div>
+    </section>
+
+    <!-- ============ 8) سجل النشاط ============ -->
+    <section class="screen" id="screen-history">
+      <header class="subbar">
+        <a class="back" href="#dashboard" aria-label="رجوع"><svg class="ic"><use href="#i-chev-r"/></svg></a>
+        <h2>سجل النشاط</h2>
+      </header>
+      <div class="content">
+        <article class="card">
+          <h3 class="card-title">متابعة رطوبة التربة <span class="live-chip" id="chartChip">آخر 24 ساعة</span></h3>
+          <canvas id="moistChart" style="width:100%;height:150px"></canvas>
+          <div class="legend-row">
+            <span class="lg"><i class="lg-line"></i>الرطوبة</span>
+            <span class="lg"><i class="lg-dot on"></i>حد بدء الري</span>
+            <span class="lg"><i class="lg-dot off"></i>حد التوقف</span>
+          </div>
+        </article>
+
+        <div class="grid-3">
+          <article class="card stat-card">
+            <span class="stat-icon" aria-hidden="true"><svg class="ic"><use href="#i-shower"/></svg></span>
+            <div class="stat-val"><span id="statCount">0</span></div>
+            <p>مرات الري اليوم</p>
+          </article>
+          <article class="card stat-card">
+            <span class="stat-icon" aria-hidden="true"><svg class="ic"><use href="#i-timer"/></svg></span>
+            <div class="stat-val"><span id="statMinutes">0</span><small>د</small></div>
+            <p>مدة الري اليوم</p>
+          </article>
+          <article class="card stat-card">
+            <span class="stat-icon" aria-hidden="true"><svg class="ic"><use href="#i-chart"/></svg></span>
+            <div class="stat-val"><span id="statTotal">0</span></div>
+            <p>إجمالي العمليات</p>
+          </article>
+        </div>
+
+        <section class="section">
+          <h4 class="section-title">آخر العمليات</h4>
+          <div class="card log-card">
+            <div class="log-list" id="logList"></div>
+            <p class="hint" id="logEmpty" hidden>لا توجد عمليات بعد — شغّل الري وسيظهر هنا</p>
+          </div>
+        </section>
+
+        <div class="actions-row">
+          <button class="btn btn-ghost btn-xl" id="btnExportCsv"><svg class="ic"><use href="#i-chart"/></svg> تصدير السجل CSV</button>
+          <button class="btn btn-danger btn-xl" id="btnClearLog">مسح السجل</button>
+        </div>
+        <p class="hint">السجل محفوظ على جهازك — صدّره CSV لتستخدمه في التقرير أو الرسوم البيانية.</p>
+      </div>
+    </section>
+
+    <!-- ============ 9) الإعدادات ============ -->
+    <section class="screen" id="screen-settings">
+      <header class="subbar">
+        <a class="back" href="#dashboard" aria-label="رجوع"><svg class="ic"><use href="#i-chev-r"/></svg></a>
+        <h2>الإعدادات</h2>
+      </header>
+      <div class="content">
+        <article class="card">
+          <h3 class="card-title">هوية المزرعة</h3>
+          <label class="field">
+            <span>اسم المزرعة</span>
+            <input type="text" id="setFarmName" maxlength="24" placeholder="مثال: مزرعة الوادي" />
+          </label>
+          <p class="field-label">نوع المحصول — يُستخدم في تشخيص الذكاء الاصطناعي ويظهر في بطاقة التربة</p>
+          <div class="crop-grid" id="cropGrid">
+            <button class="crop-chip" data-crop="طماطم">طماطم</button>
+            <button class="crop-chip" data-crop="خيار">خيار</button>
+            <button class="crop-chip" data-crop="فلفل">فلفل</button>
+            <button class="crop-chip" data-crop="نعناع">نعناع</button>
+            <button class="crop-chip" data-crop="نباتات زينة">نباتات زينة</button>
+            <button class="crop-chip" data-crop="">بدون تحديد</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">التنبيهات</h3>
+          <button class="chip chip-wide notifyToggle" id="btnNotify2"><svg class="ic"><use href="#i-bell"/></svg><span class="notify-text">التنبيهات: غير مفعلة</span></button>
+          <p class="hint">إشعارات عند بدء أو توقف الري الذكي، وعند انخفاض الرطوبة الخطير.</p>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">البيانات</h3>
+          <button class="btn btn-ghost btn-block" id="btnExportCsv2">تصدير السجل CSV</button>
+          <button class="btn btn-danger btn-block" id="btnResetAll">إعادة تهيئة التطبيق</button>
+          <p class="hint">تمسح كل السجلات والإعدادات المحفوظة على هذا الجهاز وتبدأ من جديد.</p>
+        </article>
+
+        <footer class="about-footer">Hydrix v1.0.0 — مدرسة WE للتكنولوجيا التطبيقية</footer>
+      </div>
+    </section>
+
+    <!-- ============ 10) عن المشروع ============ -->
+    <section class="screen" id="screen-about">
+      <header class="subbar">
+        <a class="back" href="#dashboard" aria-label="رجوع"><svg class="ic"><use href="#i-chev-r"/></svg></a>
+        <h2>عن Hydrix</h2>
+      </header>
+      <div class="content">
+        <p class="page-lead">
+          Hydrix نظام لمراقبة التربة وإدارة الري بطريقة ذكية، يجمع بيانات الحساسات ويحللها
+          بهدف تحسين الإنتاجية وتقليل استهلاك المياه.
+        </p>
+
+        <section class="section">
+          <h4 class="section-title">التقنيات المستخدمة</h4>
+          <div class="tech-grid">
+            <article class="card tech-card"><span class="tech-icon" aria-hidden="true"><svg class="ic"><use href="#i-cpu"/></svg></span><h3>ESP32</h3><p>معالجة بيانات الحساسات والتحكم في المضخة</p></article>
+            <article class="card tech-card"><span class="tech-icon" aria-hidden="true"><svg class="ic"><use href="#i-robot"/></svg></span><h3>الذكاء الاصطناعي</h3><p>تحليل صور النبات ومتابعة حالته</p></article>
+            <article class="card tech-card"><span class="tech-icon" aria-hidden="true"><svg class="ic"><use href="#i-globe"/></svg></span><h3>إنترنت الأشياء</h3><p>ربط الحساسات والتطبيق معاً</p></article>
+            <article class="card tech-card"><span class="tech-icon" aria-hidden="true"><svg class="ic"><use href="#i-drop"/></svg></span><h3>توفير المياه</h3><p>ري في الوقت المناسب بلا هدر</p></article>
+            <article class="card tech-card"><span class="tech-icon" aria-hidden="true"><svg class="ic"><use href="#i-sprout"/></svg></span><h3>مراقبة التربة</h3><p>قياس رطوبة التربة لحظياً</p></article>
+            <article class="card tech-card"><span class="tech-icon" aria-hidden="true"><svg class="ic"><use href="#i-sun"/></svg></span><h3>طاقة شمسية</h3><p>تشغيل النظام بلوحة شمسية وبطاريات</p></article>
+          </div>
+        </section>
+
+        <section class="section">
+          <h4 class="section-title">الفريق</h4>
+          <div class="card team-card">
+            <div class="team-row"><svg class="ic"><use href="#i-user"/></svg> رقية جمال</div>
+            <div class="team-row"><svg class="ic"><use href="#i-user"/></svg> مروان نميري</div>
+            <div class="team-row"><svg class="ic"><use href="#i-user"/></svg> محمد صلاح الدين</div>
+            <div class="team-row"><svg class="ic"><use href="#i-user"/></svg> عمر سعد</div>
+            <div class="team-row"><svg class="ic"><use href="#i-user"/></svg> بياتريس ملاك</div>
+          </div>
+        </section>
+
+        <footer class="about-footer">© Hydrix 2024 — الإصدار 1.0.0 — جميع الحقوق محفوظة</footer>
+      </div>
+    </section>
+
+    <!-- ============ شريط التنقل السفلي ============ -->
+    <nav class="bottomnav" id="bottomnav" hidden>
+      <a class="nav-item" data-screen="dashboard" href="#dashboard"><span aria-hidden="true"><svg class="ic"><use href="#i-home"/></svg></span>الرئيسية</a>
+      <a class="nav-item" data-screen="history" href="#history"><span aria-hidden="true"><svg class="ic"><use href="#i-chart"/></svg></span>السجل</a>
+      <a class="nav-item" data-screen="plant" href="#plant"><span aria-hidden="true"><svg class="ic"><use href="#i-leaf"/></svg></span>تحليل النبات</a>
+      <a class="nav-item" data-screen="about" href="#about"><span aria-hidden="true"><svg class="ic"><use href="#i-info"/></svg></span>عن المشروع</a>
+    </nav>
+
+    <div class="toast" id="toast" role="status"></div>
+  </div>
+
+  <input type="file" id="plantFile" accept="image/*" capture="environment" hidden />
+  <canvas id="analyzeCanvas" hidden></canvas>
+
+  <script src="js/bluetooth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
