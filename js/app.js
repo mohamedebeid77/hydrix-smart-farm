@@ -691,8 +691,8 @@ function render() {
             "جاري الري منذ " + fmtElapsed(Date.now() - state.pumpStartTs);
       } else {
          manualRuntime.classList.add("hidden");
-      }
-
+        }
+   }
 
   // الري المؤقت
   if (!state.timedEndsAt) {
